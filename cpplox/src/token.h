@@ -17,6 +17,10 @@ public:
 		std::variant<int, float, std::string> literal, int line);
 
 	std::string toString();
+
+	std::variant<int, float, std::string> getLiteral();
+
+	TokenType getType();
 	
 };
 

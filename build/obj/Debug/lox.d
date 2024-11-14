@@ -170,7 +170,7 @@
  /usr/include/c++/11/bits/erase_if.h ../../../cpplox/src/token_type.h \
  ../../../cpplox/src/token.h /usr/include/c++/11/variant \
  /usr/include/c++/11/bits/enable_special_members.h \
- /usr/include/c++/11/bits/parse_numbers.h
+ /usr/include/c++/11/bits/parse_numbers.h ../../../cpplox/src/parser.h
 /usr/include/stdc-predef.h:
 /usr/include/c++/11/iostream:
 /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h:
@@ -386,3 +386,4 @@
 /usr/include/c++/11/variant:
 /usr/include/c++/11/bits/enable_special_members.h:
 /usr/include/c++/11/bits/parse_numbers.h:
+../../../cpplox/src/parser.h:

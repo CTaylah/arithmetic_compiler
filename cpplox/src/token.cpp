@@ -25,3 +25,11 @@ std::string Token::toString(std::variant<int, float, std::string> literal) {
 std::string Token::toString() {
 	return token_type_to_string(type) + " " + lexeme + " " + toString(literal);
 }
+
+std::variant<int, float, std::string> Token::getLiteral(){
+	return literal;
+}
+
+TokenType Token::getType(){
+	return type;
+}
