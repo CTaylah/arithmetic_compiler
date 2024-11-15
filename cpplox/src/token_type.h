@@ -63,5 +63,6 @@ inline std::string token_type_to_string(TokenType type){
 		case TokenType::VAR: return "VAR";
 		case TokenType::WHILE: return "WHILE";
 		case TokenType::END_OF_FILE: return "END_OF_FILE";
+		default: return "UNKNOWN";
 	}
 }

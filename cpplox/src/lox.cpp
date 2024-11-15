@@ -3,7 +3,7 @@
 #include "parser.h"
 
 int main(int argc, char** argv) {
-	std::string lox_source = "3 + ( (2) + 3 + (((3)))) * 4";
+	std::string lox_source = "(2 * 2) + (2 + 3 * 4) * ((5))";
 	Scanner scanner(lox_source);
 	std::vector<Token> tokens = scanner.scanTokens();
 

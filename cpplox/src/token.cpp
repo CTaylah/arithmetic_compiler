@@ -12,7 +12,7 @@ Token::Token(TokenType type, std::string lexeme, std::variant<int, float, std::s
 	this->line = line;
 }
 
-std::string Token::toString(std::variant<int, float, std::string> literal) {
+std::string Token::toString(std::variant<int, float, std::string> literal) const {
 	if (std::holds_alternative<int>(literal)) {
 		return std::to_string(std::get<int>(literal));
 	} else if (std::holds_alternative<float>(literal)) {
@@ -22,7 +22,7 @@ std::string Token::toString(std::variant<int, float, std::string> literal) {
 	}
 }
 
-std::string Token::toString() {
+std::string Token::toString() const {
 	return token_type_to_string(type) + " " + lexeme + " " + toString(literal);
 }
 

@@ -64,9 +64,11 @@ GENERATED :=
 OBJECTS :=
 
 GENERATED += $(OBJDIR)/lox.o
+GENERATED += $(OBJDIR)/parser_node.o
 GENERATED += $(OBJDIR)/scanner.o
 GENERATED += $(OBJDIR)/token.o
 OBJECTS += $(OBJDIR)/lox.o
+OBJECTS += $(OBJDIR)/parser_node.o
 OBJECTS += $(OBJDIR)/scanner.o
 OBJECTS += $(OBJDIR)/token.o
 
@@ -133,6 +135,9 @@ endif
 # #############################################
 
 $(OBJDIR)/lox.o: ../../../cpplox/src/lox.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/parser_node.o: ../../../cpplox/src/parser_node.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/scanner.o: ../../../cpplox/src/scanner.cpp

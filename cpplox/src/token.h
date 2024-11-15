@@ -10,13 +10,14 @@ private:
 	std::string lexeme;
 	std::variant<int, float, std::string> literal;
 	int line;
-	std::string toString(std::variant<int, float, std::string> literal);
+	std::string toString(std::variant<int, float, std::string> literal) const;
 public:
 
+	Token() = default;
 	Token(TokenType type, std::string lexeme,
 		std::variant<int, float, std::string> literal, int line);
 
-	std::string toString();
+	std::string toString() const;
 
 	std::variant<int, float, std::string> getLiteral();
 

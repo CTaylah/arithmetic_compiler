@@ -1,135 +1,139 @@
 #include <iostream>
 #include "scanner.h"
+#include "parser_node.h"
 
-class ExprNode{
-public:
-    virtual ~ExprNode(){}
-};
 
-class BinaryExprNode : public ExprNode{
-    public:
-        ExprNode left;
-        Token op;
-        ExprNode right;
 
-        BinaryExprNode(ExprNode left, Token op, ExprNode right):
-            left(left), op(op), right(right){}
-};
 
-class LiteralExpr : public ExprNode{
-    public:
-        Token value;
+/*
+expr_node
+- term_node
+- expr_prime_node
 
-        LiteralExpr(Token value):
-            value(value){}
-};
+expr_prime_node
+- operator (+ or -)
+- term_node
+- expr_prime_node
+
+term_node
+- factor_node
+- term_prime_node
+
+term_prime_node
+- operator (* or /)
+- factor_node
+- term_prime_node
+
+factor_node
+- number_node or expr_node
+*/
+
 
 class Parser{
 private:
     std::vector<Token> tokens;
+    Token current_word;
     int index;
 
-    void Fail(Token t, int line){
-        std::cout << "Error on token:" << t.toString() << "\n";
-        std::cout << line;
+    inline void advance(){
+        if (index + 1 < tokens.size()){
+            index += 1;
+            current_word = tokens[index];
+        }
+        else{throw std::runtime_error("PARSE_ADVANCE ERROR: End of file");}
+    }
+
+    inline Token peek(){
+        if (index + 1 < tokens.size()){
+            return tokens[index + 1];
+        }
+        else{throw std::runtime_error("PARSE_PEEK ERROR: End of file");}
+    }
+
+    inline void Fail(int label){
+        std::cout << "Error on token:" << current_word.toString() << "\n";
+        std::cout << label;
         exit(1);
          
     }
 
-    inline bool Expr(){
-        if (Term()){
-            return ExprPrime();
+    inline ExprNode* Expr(){
+        TermNode* term = Term();
+        ExprPrimeNode* expr_prime = ExprPrime();
+        return new ExprNode(term, expr_prime);
+    }
+
+    inline ExprPrimeNode* ExprPrime(){
+        if(current_word.getType() == TokenType::PLUS || current_word.getType() == TokenType::MINUS){
+            Token word_copy = current_word;
+            advance();
+            TermNode* term = Term();
+            ExprPrimeNode* expr_prime = ExprPrime();
+            return new ExprPrimeNode(word_copy, term, expr_prime, false);
+        }
+        else if (current_word.getType() == TokenType::END_OF_FILE){
+            return new ExprPrimeNode(current_word, nullptr, nullptr, true);
         }
         else{
-            Fail(tokens[index], 1);
-            return false;
+            return nullptr;
         }
-
     }
 
-    inline bool ExprPrime(){
-        if(tokens[index].getType() == TokenType::PLUS || tokens[index].getType() == TokenType::MINUS){
-            index += 1;
-            if(Term()){
-                return ExprPrime();
+    inline TermNode* Term(){
+        FactorNode* factor = Factor();
+        TermPrimeNode* term_prime = TermPrime();
+        return new TermNode(factor, term_prime);
+    }
+
+    inline TermPrimeNode* TermPrime(){
+        if(current_word.getType() == TokenType::STAR || current_word.getType() == TokenType::SLASH){
+            Token word_copy = current_word;
+            advance();
+            FactorNode* factor = Factor();
+            TermPrimeNode* term_prime = TermPrime();
+            return new TermPrimeNode(word_copy, factor, term_prime, false);
+            
+        }
+        else if(current_word.getType() == TokenType::END_OF_FILE){
+            return new TermPrimeNode(current_word, nullptr, nullptr, true);
+        }
+        else{
+            return nullptr;
+        }
+    }
+
+    inline FactorNode* Factor(){
+        if(current_word.getType() == TokenType::NUMBER){
+            FactorNode* factor = new FactorNode(current_word);
+            advance();
+            return factor;
+        }
+        else if(current_word.getType() == TokenType::LEFT_PAREN){
+            advance();
+            ExprNode* expr = Expr();
+            if(current_word.getType() == TokenType::RIGHT_PAREN){
+                FactorNode* factor = new FactorNode(expr);
+                advance();
+                return factor;
             }
             else{
-                Fail(tokens[index], 2);
+                Fail(1);
             }
         }
-        else if(tokens[index].getType() == TokenType::END_OF_FILE || tokens[index].getType() == TokenType::RIGHT_PAREN){
-            return true;
+        else{
+            Fail(2);
         }
-        else Fail(tokens[index], 3);
-        return false;
-    }
-
-    inline bool Term(){
-        // literal1 = Factor()
-        if(Factor()){
-            return TermPrime();
-        }
-        else Fail(tokens[index], 4);
-        return false;
-    }
-
-    inline bool TermPrime(){
-        if(tokens[index].getType() == TokenType::STAR || tokens[index].getType() == TokenType::SLASH){
-            index += 1;
-            if(Factor()){
-                return TermPrime();
-            }
-            else{
-                Fail(tokens[index], 5);
-                return false;
-            }
-        }
-
-        else if(tokens[index].getType() == TokenType::END_OF_FILE || tokens[index].getType() == TokenType::PLUS 
-        || tokens[index].getType() == TokenType::MINUS || tokens[index].getType() == TokenType::RIGHT_PAREN){
-            return true;
-        }
-        Fail(tokens[index], 6);
-        return false;
-    }
-
-    inline bool Factor(){
-        if(tokens[index].getType() == TokenType::LEFT_PAREN){
-            index += 1;
-
-            if(!Expr()) 
-               Fail(tokens[index], 7);
-            if (tokens[index].getType() != TokenType::RIGHT_PAREN)
-                Fail(tokens[index], 8);
-
-            index += 1;
-            return true;
-        }
-        else if (tokens[index].getType() == TokenType::IDENTIFIER || tokens[index].getType() == TokenType::NUMBER){
-            index += 1;
-            return true;
-        }
-
-        else Fail(tokens[index], 9);
-        return false;
     }
 
 public:
-    inline Parser(std::vector<Token> tokens){this->tokens = tokens;}
+    inline Parser(std::vector<Token> tokens){
+        this->tokens = tokens; 
+        this->index=0;
+        current_word = tokens[0];
+        }
     inline void parse(){
-        index = 0;
-        if (Expr()){
-            if (tokens[index].getType() == TokenType::END_OF_FILE){
-                std::cout << "success \n";
-                return;
-            }
-            else{
-                Fail(tokens[index], 10);
-            }
-        }
-        else{
-            Fail(tokens[index], 11);
-        }
+        ExprNode* expr = Expr();
+        expr->print();
     }
 
 };
