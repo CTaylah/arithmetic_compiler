@@ -9,12 +9,6 @@ struct BinaryOpNode;
 
 
 using ASTNodeType = std::variant<std::unique_ptr<BinaryOpNode>, std::unique_ptr<ScalarNode>>;
-// union ASTNodeType{
-//     std::unique_ptr<BinaryOpNode> binary_op;
-//     std::unique_ptr<ScalarNode> scalar;
-//     ASTNodeType(std::unique_ptr<BinaryOpNode> binary_op):binary_op(std::move(binary_op)){}
-//     ASTNodeType(std::unique_ptr<ScalarNode> scalar):scalar(std::move(scalar)){}
-// };
 
 
 struct ScalarNode{

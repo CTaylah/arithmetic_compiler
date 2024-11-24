@@ -2,6 +2,7 @@
 #include "scanner.h"
 #include "parser_node.h"
 #include "ast.h"
+#include "three_address_code.h"
 
 
 
@@ -137,6 +138,8 @@ public:
         std::cout << "\n";
         ASTNodeType node = node_from_expr(expr);
         std::visit([](auto&& arg) { arg->print(0); }, node);
+        std::cout << "\n";
+        TACInstructions tac(std::move(node));
     }
 
 };

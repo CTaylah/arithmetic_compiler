@@ -30,6 +30,22 @@ std::variant<int, float, std::string> Token::getLiteral(){
 	return literal;
 }
 
+std::string Token::getLiteralString(){
+	if(std::holds_alternative<int>(literal)){
+		return std::to_string(std::get<int>(literal));
+	}
+	else if(std::holds_alternative<float>(literal)){
+		return std::to_string(std::get<float>(literal));
+	}
+	else{
+		return std::get<std::string>(literal);
+	}
+}
+
+std::string Token::getLexeme(){
+	return lexeme;
+}
+
 TokenType Token::getType(){
 	return type;
 }

@@ -210,7 +210,8 @@
  /usr/include/c++/11/bits/stream_iterator.h \
  /usr/include/c++/11/bits/uses_allocator_args.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
- /usr/include/c++/11/pstl/execution_defs.h
+ /usr/include/c++/11/pstl/execution_defs.h \
+ ../../../cpplox/src/three_address_code.h /usr/include/c++/11/optional
 /usr/include/stdc-predef.h:
 /usr/include/c++/11/iostream:
 /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h:
@@ -475,3 +476,5 @@
 /usr/include/c++/11/bits/uses_allocator_args.h:
 /usr/include/c++/11/pstl/glue_memory_defs.h:
 /usr/include/c++/11/pstl/execution_defs.h:
+../../../cpplox/src/three_address_code.h:
+/usr/include/c++/11/optional:

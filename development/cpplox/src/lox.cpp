@@ -4,7 +4,7 @@
 #include "ast.h"
 
 int main(int argc, char** argv) {
-	std::string lox_source = "5 * (3 + 2)";
+	std::string lox_source = "5 * (3 + 4)";
 	Scanner scanner(lox_source);
 	std::vector<Token> tokens = scanner.scanTokens();
 
