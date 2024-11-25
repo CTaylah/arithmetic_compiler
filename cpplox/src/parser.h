@@ -1,7 +1,8 @@
 #include <iostream>
 #include "scanner.h"
 #include "parser_node.h"
-
+#include "ast.h"
+#include "three_address_code.h"
 
 
 
@@ -27,7 +28,6 @@ term_prime_node
 factor_node
 - number_node or expr_node
 */
-
 
 class Parser{
 private:
@@ -72,7 +72,8 @@ private:
             return new ExprPrimeNode(word_copy, term, expr_prime, false);
         }
         else if (current_word.getType() == TokenType::END_OF_FILE){
-            return new ExprPrimeNode(current_word, nullptr, nullptr, true);
+            //This seems fishy
+            return nullptr;
         }
         else{
             return nullptr;
@@ -95,7 +96,7 @@ private:
             
         }
         else if(current_word.getType() == TokenType::END_OF_FILE){
-            return new TermPrimeNode(current_word, nullptr, nullptr, true);
+            return nullptr;
         }
         else{
             return nullptr;
@@ -134,6 +135,11 @@ public:
     inline void parse(){
         ExprNode* expr = Expr();
         expr->print();
+        std::cout << "\n";
+        ASTNodeType node = node_from_expr(expr);
+        std::visit([](auto&& arg) { arg->print(0); }, node);
+        std::cout << "\n";
+        TACInstructions tac(std::move(node));
     }
 
 };

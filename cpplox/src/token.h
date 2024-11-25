@@ -21,6 +21,10 @@ public:
 
 	std::variant<int, float, std::string> getLiteral();
 
+	std::string getLiteralString();
+
+	std::string getLexeme();
+
 	TokenType getType();
 	
 };

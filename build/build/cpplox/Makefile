@@ -63,10 +63,12 @@ endif
 GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/ast.o
 GENERATED += $(OBJDIR)/lox.o
 GENERATED += $(OBJDIR)/parser_node.o
 GENERATED += $(OBJDIR)/scanner.o
 GENERATED += $(OBJDIR)/token.o
+OBJECTS += $(OBJDIR)/ast.o
 OBJECTS += $(OBJDIR)/lox.o
 OBJECTS += $(OBJDIR)/parser_node.o
 OBJECTS += $(OBJDIR)/scanner.o
@@ -134,6 +136,9 @@ endif
 # File Rules
 # #############################################
 
+$(OBJDIR)/ast.o: ../../../cpplox/src/ast.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/lox.o: ../../../cpplox/src/lox.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
