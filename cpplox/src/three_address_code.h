@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-=======
+
 #pragma once
 
->>>>>>> b36b634 (adding assembly)
 #include "ast.h"
 #include <string>
 #include <optional>
@@ -16,10 +14,6 @@ struct TAC{
 
     TAC(std::string arg1, int index)
         :op(std::nullopt), arg1(arg1), arg2(std::nullopt)
-            {result = "t" + std::to_string(index);}
-
-    TAC(std::string arg1, std::string arg2, int index, std::string op)
-        :op(op), arg1(arg1), arg2(arg2) 
             {result = "t" + std::to_string(index);}
 
     TAC(std::string arg1, std::string arg2, int index, std::string op)
@@ -79,7 +73,6 @@ public:
         return instructions.empty();
     }
 
->>>>>>> b36b634 (adding assembly)
 private:
     inline void add_instruction(TAC tac){
         instructions.push_back(tac);

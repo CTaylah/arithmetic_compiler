@@ -4,9 +4,6 @@
 #include "assembly.h"
 #include "ast.h"
 
-int main(int argc, char** argv) {
-	std::string lox_source = "5 * (3 + 4)";
-
 
 int main(int argc, char** argv) {
 	std::string lox_source = "(3 * 3) + (23 + (32 + 23)) - 523";
@@ -24,4 +21,3 @@ int main(int argc, char** argv) {
 	create_file();
 
 }
-
