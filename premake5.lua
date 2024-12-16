@@ -34,4 +34,3 @@ project "cpplox"
         optimize "On"
 
 
--- ExprNode(  TermNode(    FactorNode(Number: NUMBER 5 5.000000)     TermPrimeNode(STAR *      FactorNode(Number: NUMBER 4 4.000000)     TermPrimeNode(STAR *      FactorNode(Number: NUMBER 3 3.000000) ))) )

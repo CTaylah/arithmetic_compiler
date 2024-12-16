@@ -210,8 +210,11 @@
  /usr/include/c++/13/pstl/glue_memory_defs.h \
  /usr/include/c++/13/pstl/execution_defs.h \
  ../../../cpplox/src/three_address_code.h /usr/include/c++/13/optional \
- ../../../cpplox/src/assembly.h /usr/include/c++/13/fstream \
- /usr/include/c++/13/bits/codecvt.h \
+ ../../../cpplox/src/register_alloc.h /usr/include/c++/13/utility \
+ /usr/include/c++/13/bits/stl_relops.h /usr/include/c++/13/set \
+ /usr/include/c++/13/bits/stl_set.h \
+ /usr/include/c++/13/bits/stl_multiset.h ../../../cpplox/src/assembly.h \
+ /usr/include/c++/13/fstream /usr/include/c++/13/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
  /usr/include/c++/13/bits/fstream.tcc
@@ -478,6 +481,12 @@
 /usr/include/c++/13/pstl/execution_defs.h:
 ../../../cpplox/src/three_address_code.h:
 /usr/include/c++/13/optional:
+../../../cpplox/src/register_alloc.h:
+/usr/include/c++/13/utility:
+/usr/include/c++/13/bits/stl_relops.h:
+/usr/include/c++/13/set:
+/usr/include/c++/13/bits/stl_set.h:
+/usr/include/c++/13/bits/stl_multiset.h:
 ../../../cpplox/src/assembly.h:
 /usr/include/c++/13/fstream:
 /usr/include/c++/13/bits/codecvt.h:

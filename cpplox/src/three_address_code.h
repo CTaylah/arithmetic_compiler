@@ -33,13 +33,9 @@ struct TAC{
 class TACInstructions{
     std::vector<TAC> instructions;
     int index = 0;
-
 public:
     TACInstructions(ASTNodeType head){
         tac_from_ast(std::move(head));
-        for(TAC tac : instructions){
-            tac.print();
-        }
     }
 
     inline void tac_from_ast(ASTNodeType head){
@@ -59,7 +55,7 @@ public:
     }
 
     TAC pop(){
-        if(is_empty()){
+        if(!is_empty()){
             TAC last_instruction = instructions.front();
             instructions.erase(instructions.begin());
             return last_instruction;
@@ -72,6 +68,7 @@ public:
     bool is_empty(){
         return instructions.empty();
     }
+
 
 private:
     inline void add_instruction(TAC tac){

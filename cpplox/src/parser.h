@@ -3,8 +3,8 @@
 #include "parser_node.h"
 #include "ast.h"
 #include "three_address_code.h"
-
-
+#include "register_alloc.h"
+#include "assembly.h"
 
 /*
 expr_node
@@ -139,7 +139,8 @@ public:
         ASTNodeType node = node_from_expr(expr);
         std::visit([](auto&& arg) { arg->print(0); }, node);
         std::cout << "\n";
-        TACInstructions tac(std::move(node));
-    }
 
+        TACInstructions tac(std::move(node));
+        create_file(tac);
+    }
 };
